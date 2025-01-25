@@ -1,0 +1,47 @@
+Create a Flask-based chatbot web application with the following specifications:
+
+Technical Requirements:
+- Python Flask backend with Google Gemini AI integration
+- Use python markdown package to convert responses from Google Gemini AI to html for display
+- Single page responsive web interface
+- Button to generate idea
+- Real-time chat interface that supports an open-ended converesational flow
+
+Design Elements:
+- Header: "Izzy at SwampHacks"
+- Track selection dropdown (single select dropdown), hard coded in html
+- Prize categories dropdown (select dropdown that allows multiple selection), hard coded in html
+- Button: Generate Idea, show loading state while waiting
+- User-friendly chat interface
+
+Chatbot Personality:
+- Name: Izzy (MLH's 2025 mascot "Izzy the Internet Inchworm")
+- Role: Hackathon project advisor
+- Tone: Welcoming, educational, encouraging
+
+Business Logic:
+- Require theme and prize selection before chat activation
+- Provide project ideas based on selected theme and all the prizes
+- Each project idea should use technologies associated with each selected prize.
+- Focus on technology learning and exploration
+- Match project ideas with SwampHacks retro technology theme, selected track, and MLH prize categories
+
+Available SwampHacks Track:
+* AI Track - Leverage Artificial Intelligence to connect the past with the future by creating innovative solutions inspired by historical data, legacy systems, or earlier technologies.
+* Education Track - Transform student learning, empower teachers, and streamline educational management for institutions with your solution.
+* Social Good & Human Experience Track - Develop a solution that address current social issues or enhances everyday human experiences in a modern, globalized world.
+* Health Track - Use historical healthcare milestones, data, or trends to inspire future-focused healthcare solutions.
+* Environmental/Sustainability Track - Build on past lessons and milestones in conservation and sustainability to craft innovative environmental and energy solutions for the future.
+
+MLH Prize Categories at SwampHacks, More information at http://mlh.link/SwampHacks:
+* Best Use of Auth0 - Prize: Wireless Headphones
+* Best AI Application Built with Cloudflare - Prize: Arduino Kit
+* Best Use of Terraform - Prize: Keychron K8 Wireless Keyboard
+* Best Domain Name from GoDaddy Registry - Prize: GoDaddy Swag Bag
+* Best Use of Gen AI - Prize: Mechanical Keyboard & Fitbit
+
+Expected Output:
+- Functional chat interface
+- Track/prize selection system
+- AI-powered project suggestions
+- Technology learning guidance

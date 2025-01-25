@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Izzy at SwampHacks</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <header class="text-center py-8">
+            <h1 class="text-3xl font-bold text-gray-800">Izzy at SwampHacks</h1>
+        </header>
+
+        <div class="flex flex-col md:flex-row gap-4">
+            <div class="md:w-1/4">
+                <div class="bg-white shadow-md rounded p-4">
+                    <h2 class="text-lg font-semibold text-gray-700 mb-2">Theme & Prizes</h2>
+                    
+                    <div class="mb-4">
+                        <label for="track" class="block text-gray-600 text-sm font-bold mb-2">Track Selection</label>
+                        <select id="track" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <option value="" disabled selected>Select Track</option>
+                            {% for track in tracks %}
+                                <option value="{{ track }}">{{ track }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="prizes" class="block text-gray-600 text-sm font-bold mb-2">Prize Categories</label>
+                        <select id="prizes" multiple class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            {% for prize in prizes %}
+                                <option value="{{ prize }}">{{ prize }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <button id="generate-idea" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Generate Idea
+                    </button>
+                </div>
+            </div>
+
+            <div class="md:w-3/4">
+                <div class="bg-white shadow-md rounded p-4">
+                    <h2 class="text-lg font-semibold text-gray-700 mb-2">Chat with Izzy</h2>
+                    <div id="chat-area" class="mb-4 p-2 border border-gray-300 rounded h-96 overflow-y-auto">
+                        <p>Welcome to SwampHacks! I'm Izzy, your hackathon project advisor. Select a track and prize categories, then generate a project idea or start chatting with me!</p>
+                    </div>
+                    <div class="flex">
+                        <input type="text" id="user-message" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Type your message...">
+                        <button id="send-message" class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Send
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('generate-idea').addEventListener('click', function() {
+            const track = document.getElementById('track').value;
+            const prizes = Array.from(document.getElementById('prizes').selectedOptions).map(option => option.value);
+
+            if (!track || prizes.length === 0) {
+                alert("Please select a track and at least one prize category.");
+                return;
+            }
+
+            this.disabled = true;
+            this.textContent = 'Generating Idea...';
+
+            fetch('/generate_idea', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `track=${track}&prizes=${prizes.join(',')}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('chat-area').innerHTML = data;
+                this.disabled = false;
+                this.textContent = 'Generate Idea';
+            });
+        });
+
+        document.getElementById('send-message').addEventListener('click', function() {
+            const userMessage = document.getElementById('user-message').value;
+            if (!userMessage) return;
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `message=${userMessage}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('chat-area').innerHTML += '<p><strong>You:</strong> ' + userMessage + '</p>';
+                document.getElementById('chat-area').innerHTML += '<p><strong>Izzy:</strong> ' + data + '</p>';
+                document.getElementById('user-message').value = '';
+                document.getElementById('chat-area').scrollTop = document.getElementById('chat-area').scrollHeight; // Scroll to bottom
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+# Follow Best Practices
+- Don't use python virtual environments, use python directly
+- All the commands should run on macOS.
+- I already created a .env with a Google Gemini API Key (labeled as `GEMINI_API_KEY`) for you to use.
+- Do not run any commands in the background using '&'.
+- Use AJAX to make API requests from the frontend to the backend
+- index.html should be placed under templates directory.
+
+# Project Dependencies
+- Install the following packages using `pip3` and use in the project: `flask`, `google-generativeai`, `markdown`, and `python-dotenv`.
+- ngrok has been installed and available in $PATH
+
+# Styling
+- Use Tailwind for styling to make our project look professional.
+- Use the Tailwind CDN. Do not compile it locally.
+
+# Accessibility
+- Always run `python3 app.py` before running ngrok
+- Use ngrok to make our localhost webapp available from other computers.
+- Use my custom ngrok domain: rested-asp-welcomed.ngrok-free.app
